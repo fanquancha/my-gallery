@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>欺负七海sai</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+            user-select: none; 
+        }
+        
+        #scoreboard {
+            position: absolute;
+            top: 30px;
+            font-size: 24px;
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+            color: #333;
+        }
+
+        #character {
+            width: 300px; 
+            cursor: pointer;
+            transition: transform 0.05s; 
+        }
+
+        .shake {
+            transform: translate(5px, 10px) rotate(-5deg) scale(0.95);
+        }
+
+        .plus-one {
+            position: absolute;
+            color: #21e36f;
+            font-size: 28px;
+            font-weight: 900;
+            font-family: 'Courier New', Courier, monospace;
+            pointer-events: none;
+            animation: floatUp 1s ease-out forwards;
+        }
+
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-50px); }
+        }
+    </style>
+</head>
+<body>
+    <div id="scoreboard">崩溃次数<span id="score">0</span></div>
+    <img id="character" src="img1.png" alt="七海sai">
+
+    <script>
+        const charImg = document.getElementById('character');
+        const scoreDisplay = document.getElementById('score');
+        let score = 0;
+
+        charImg.addEventListener('mousedown', function(e) {
+            charImg.src = 'img2.png'; 
+            charImg.classList.add('shake'); 
+
+            score++;
+            scoreDisplay.innerText = score;
+
+            const plusOne = document.createElement('div');
+            plusOne.innerText = '+1';
+            plusOne.classList.add('plus-one');
+
+            plusOne.style.left = (e.clientX - 10) + 'px';
+            plusOne.style.top = (e.clientY - 30) + 'px';
+
+            document.body.appendChild(plusOne);
+
+            setTimeout(function() {
+                plusOne.remove();
+            }, 1000);
+        });
+
+        charImg.addEventListener('mouseup', function() {
+            charImg.src = 'img1.png'; 
+            charImg.classList.remove('shake'); 
+        });
+
+        charImg.addEventListener('mouseleave', function() {
+            charImg.src = 'img1.png';
+            charImg.classList.remove('shake');
+        });
+    </script>
+</body>
+</html>
